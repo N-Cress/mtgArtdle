@@ -1,6 +1,7 @@
 import testArt from './testimage.jpg'
 import './App.css';
 import { Autocomplete, TextField, Button } from '@mui/material';
+import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState } from 'react';
 
 function App() {
@@ -16,8 +17,6 @@ function App() {
 
     checkVictory(field.value)
 
-    setGuessLeft(prevCount => prevCount - 1);
-
     if (guessLeft === 1) {
       setGameOver(true)
       disableInputs();
@@ -30,6 +29,9 @@ function App() {
       setWinOrLose(true)
       setGameOver(true)
       disableInputs();
+    }
+    else {
+      setGuessLeft(prevCount => prevCount - 1);
     }
   }
 
@@ -53,6 +55,10 @@ function App() {
       {gameOver === false ? <div className="guess-left"> {guessLeft} guesses left </div> 
       : winOrLose ? <div className="guess-left"> You won! </div> :
       <div className="guess-left"> You lost! </div>}
+      <div id="hearts" className="guess-left">
+      { Array.from({length: guessLeft},(_,index) => <Favorite/>) }  
+      { Array.from({length: 5 - guessLeft}, (_,index) => <FavoriteBorder />)}
+      </div>
       <div id="input-container"> 
         <Autocomplete
           className="input"
