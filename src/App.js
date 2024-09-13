@@ -2,13 +2,16 @@ import testArt from './testimage.jpg'
 import './App.css';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
   const [guessLeft, setGuessLeft] = useState(5);
   const [fieldValue, setFieldValue] = useState();
   const [winOrLose, setWinOrLose] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [answer, setAnswer] = useState();
+  const [artData, setArtData] = useState(false);
 
 
   function submitGuess() {
@@ -25,7 +28,7 @@ function App() {
   }
 
   function checkVictory(guess) {
-    if (guess === "Burgeoning") {
+    if (guess === answer) {
       setWinOrLose(true)
       setGameOver(true)
       disableInputs();
@@ -46,17 +49,29 @@ function App() {
     field.disabled = true;
   }
 
+  useEffect(() => {
+    async function retrieveArtInfo() {
+      const { data } = await axios.get('https://api.scryfall.com/cards/random')
+      console.log(data)
+      setArtData(data)
+      setAnswer(data.name)
+    }
+    retrieveArtInfo()
+  }, [])
+
   return (
     <div id="game">
       <h1>MtgARTDLE </h1>
       <div id="image-container">
-        <img id="game-image" src={testArt} alt="Guess the art" />
+        {!!artData === true ? <img id="game-image" src={artData.image_uris.art_crop} alt="Guess the art" /> 
+        : <div id="game-image" className="skeleton-image"></div>
+        }
       </div>
       {gameOver === false ? <div className="guess-left"> {guessLeft} guesses left </div> 
       : winOrLose ? <div className="guess-left"> You won! </div> :
       <div className="guess-left"> You lost! </div>}
       <div id="hearts" className="guess-left">
-      { Array.from({length: guessLeft},(_,index) => <Favorite/>) }  
+      { Array.from({length: guessLeft},(_,index) => <Favorite className="heart"/>) }  
       { Array.from({length: 5 - guessLeft}, (_,index) => <FavoriteBorder />)}
       </div>
       <div id="input-container"> 
@@ -74,15 +89,8 @@ function App() {
           renderInput={(params) => <TextField {...params} label="Card Name" />}
         />
         <Button onClick={submitGuess} id="submit" className="submit_button" variant="contained"> Submit your guess</Button>
+        {artData.name}
       </div>
-      <div id="feedback-container">
-        <div id="grid">
-         
-        </div>
-        <p id="feedback-message"></p>
-      </div>
-      
-  
   </div>
   );
 }
