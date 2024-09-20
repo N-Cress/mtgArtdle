@@ -77,8 +77,8 @@ function App() {
     <div id="game">
       <h1>MtgARTDLE </h1>
       <div id="image-container">
-        {!!artData === true ? <img id="game-image" src={artData.image_uris.art_crop} alt="Guess the art" /> 
-        : <div id="game-image" className="skeleton-image"></div>
+        {artData ? <img id="game-image" src={artData.image_uris.art_crop} alt="Guess the art" /> 
+        : <div className="skeleton-image"></div>
         }
       </div>
       {gameOver === false ? <div className="guess-left"> {guessLeft} guesses left </div> 
