@@ -35,17 +35,17 @@ body {
   color: white;
   background-color: #F8F0E3;
   border-radius: 8px;
-  margin-bottom: 24px;
 }
 
-.guess-left {
-  margin-bottom: 12px;
-}
 
 .heart {
   color: red;
+  margin-top: 4px;
 }
 
+.spacer {
+  margin-bottom: 40px;
+}
 
 .letter-box {
   padding: 10px;
@@ -63,4 +63,13 @@ body {
 
 .absent {
   background-color: lightgray;
+}
+
+@media only screen and (max-width: 667px) {
+  #image-container {
+    max-width: 240px;
+  }
+  img {
+    overflow: hidden;
+  }
 }

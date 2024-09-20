@@ -1,9 +1,12 @@
-import testArt from './testimage.jpg'
+import victorySound from './correct-answer-sound-effect.mp3';
+import incorrectSound from './incorrect.mp3';
 import './App.css';
 import { Autocomplete, TextField, Button } from '@mui/material';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import confetti from 'canvas-confetti';
+
 
 function App() {
   const [guessLeft, setGuessLeft] = useState(5);
@@ -13,6 +16,11 @@ function App() {
   const [answer, setAnswer] = useState();
   const [artData, setArtData] = useState(false);
 
+  const wSound = new Audio(victorySound)
+  const lSound = new Audio(incorrectSound)
+
+  wSound.volume = 0.1;
+  lSound.volume = 0.1;
 
   function submitGuess() {
     const button = document.getElementById("submit");
@@ -29,12 +37,18 @@ function App() {
 
   function checkVictory(guess) {
     if (guess === answer) {
-      setWinOrLose(true)
-      setGameOver(true)
+      setWinOrLose(true);
+      setGameOver(true);
       disableInputs();
+      wSound.play()
+      confetti({
+        spread: 180,
+        particleCount: 150
+      });
     }
     else {
       setGuessLeft(prevCount => prevCount - 1);
+      lSound.play();
     }
   }
 
@@ -75,22 +89,11 @@ function App() {
       { Array.from({length: 5 - guessLeft}, (_,index) => <FavoriteBorder />)}
       </div>
       <div id="input-container"> 
-        <Autocomplete
-          className="input"
-          required
-          id="field"
-          freeSolo
-          options={[
-            { label: 'The Godfather', id: 1 },
-            { label: 'Pulp Fiction', id: 2 },
-            { label: 'Burgeoning', id: 3},
-          ]}
-          sx={{ width: 300 }}
-          renderInput={(params) => <TextField {...params} label="Card Name" />}
-        />
-        <Button onClick={submitGuess} id="submit" className="submit_button" variant="contained"> Submit your guess</Button>
-        {artData.name}
+        <TextField margin="dense" id="field" className="input" label="Card Name" />
+        <div className="space"></div>
+        <Button id="submit" onClick={submitGuess}  className="submit_button" variant="contained"> Submit your guess</Button>
       </div>
+      {artData.name}
   </div>
   );
 }
