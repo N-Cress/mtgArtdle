@@ -5,13 +5,26 @@ body {
   color: white;
 }
 
+.nav {
+  display: flex;
+  justify-content: end;
+  width: 95%;
+}
+
+.volumeButton:hover {
+  cursor: pointer;
+}
+
 #game {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 20px auto;
-  width: 300px;
+}
+
+#submit {
+  margin-top: 10px;
 }
 
 #image-container {
@@ -23,11 +36,12 @@ body {
   background-color: #1f1f1f;
   border: 2px solid white;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
 }
 
 #game-image {
   background-color: #1f1f1f;
+  filter: blur(8px);
 }
 
 
@@ -63,6 +77,18 @@ body {
 
 .absent {
   background-color: lightgray;
+}
+
+#flavor_text {
+  text-overflow: ellipsis;
+}
+
+.hint {
+  margin-bottom: 4px;
+}
+
+.hint:last-child {
+  margin-bottom: 20px;
 }
 
 @-webkit-keyframes AnimationName {
