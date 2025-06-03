@@ -156,7 +156,7 @@ function App() {
         <div className="space"></div>
         <Button id="submit" onClick={submitGuess}  className="submit_button" variant="contained"> Submit your guess</Button>
       </div>
-      {artData.name}
+      
   </div>
   );
 }
