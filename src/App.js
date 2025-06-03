@@ -131,7 +131,7 @@ function App() {
         {volume ?  <VolumeMute className="volumeButton" onClick={toggleVolume}/>
         : <VolumeOff className="volumeButton" onClick={toggleVolume}/>}
       </div>
-      <h1>MtgARTDLE </h1>
+      <h1>MTGARTDLE </h1>
       <div id="image-container">
         {artData ? <img id="game-image" src={artData.image_uris.art_crop} alt="Guess the art" /> 
         : <div className="skeleton-image"></div>
